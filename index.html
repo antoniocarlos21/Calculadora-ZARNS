@@ -1,0 +1,1284 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5">
+  <meta name="theme-color" content="#0b7a75" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e1a1d" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Vou passar? | Faculdade Zarns</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f3f6f7;
+      --surface: #ffffff;
+      --fg: #12262b;
+      --muted: #5a6f75;
+      --line: #d9e3e6;
+      --accent: #0b7a75;
+      --on-accent: #ffffff;
+      --accent-soft: #dff1ef;
+      --ok: #17723a;
+      --ok-soft: #dcf3e4;
+      --bad: #b3261e;
+      --bad-soft: #fbe4e2;
+      --warn: #8a5a00;
+      --warn-soft: #fbefd2;
+      --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+      --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+      --radius: 14px;
+      --shadow: 0 4px 20px rgba(18, 38, 43, 0.06);
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      color-scheme: light;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0e1a1d;
+        --surface: #152428;
+        --fg: #e6f0f1;
+        --muted: #93a9ae;
+        --line: #26393e;
+        --accent: #4cc9c0;
+        --on-accent: #0e1a1d;
+        --accent-soft: #163a3b;
+        --ok: #62d68a;
+        --ok-soft: #14301f;
+        --bad: #ff8a80;
+        --bad-soft: #3a1a18;
+        --warn: #f0c260;
+        --warn-soft: #382d12;
+        --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+        color-scheme: dark;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0e1a1d;
+      --surface: #152428;
+      --fg: #e6f0f1;
+      --muted: #93a9ae;
+      --line: #26393e;
+      --accent: #4cc9c0;
+      --on-accent: #0e1a1d;
+      --accent-soft: #163a3b;
+      --ok: #62d68a;
+      --ok-soft: #14301f;
+      --bad: #ff8a80;
+      --bad-soft: #3a1a18;
+      --warn: #f0c260;
+      --warn-soft: #382d12;
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: env(safe-area-inset-top, 0px);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.5;
+      padding-top: max(20px, env(safe-area-inset-top));
+      padding-bottom: max(32px, env(safe-area-inset-bottom));
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+      min-height: 100dvh;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .wrap {
+      max-width: 880px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* Logo */
+    .logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+    .logo {
+      height: 52px;
+      width: auto;
+      max-width: 220px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    /* Header */
+    header {
+      position: relative;
+      padding-right: 52px;
+      text-align: center;
+    }
+    header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 7vw, 2.7rem);
+      line-height: 1.1;
+      margin: 0 0 8px;
+      text-wrap: balance;
+    }
+    header p {
+      margin: 0 0 6px;
+      color: var(--muted);
+      max-width: 62ch;
+      font-size: 0.95rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Theme toggle */
+    .theme-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+      transition: border-color var(--transition), transform 0.15s ease;
+      box-shadow: var(--shadow);
+    }
+    .theme-btn:active { transform: scale(0.94); }
+    .theme-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    fieldset.sel {
+      border: 0;
+      margin: 0;
+      padding: 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    fieldset.sel legend {
+      padding: 0;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    /* Segmented control */
+    .seg {
+      display: inline-flex;
+      max-width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      align-self: flex-start;
+      background: var(--bg);
+    }
+    .seg label {
+      position: relative;
+      cursor: pointer;
+      display: block;
+      flex: 1;
+      min-width: 0;
+    }
+    .seg input {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .seg span {
+      display: block;
+      padding: 12px 14px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+      background: transparent;
+      color: var(--fg);
+      transition: background var(--transition), color var(--transition);
+      white-space: nowrap;
+    }
+    .seg label + label span { border-left: 1px solid var(--line); }
+    .seg input:checked + span {
+      background: var(--accent);
+      color: var(--on-accent);
+    }
+    .seg input:focus-visible + span {
+      outline: 2px solid var(--fg);
+      outline-offset: -4px;
+    }
+
+    .cfg-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    /* Parts */
+    .parts {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .part {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+      animation: fadeUp 0.35s ease both;
+    }
+    .part-n {
+      border-top: 1px dashed var(--line);
+      padding-top: 24px;
+    }
+    .part-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .part-name {
+      flex: 1 1 200px;
+      min-width: 0;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid var(--line);
+      border-radius: 0;
+      color: var(--fg);
+      padding: 8px 2px;
+      transition: border-color var(--transition);
+    }
+    .part-name::placeholder { color: var(--muted); font-weight: 500; }
+    .part-name:focus {
+      outline: none;
+      border-bottom-color: var(--accent);
+    }
+    .part-score {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      transition: color var(--transition);
+    }
+
+    /* Panel / details */
+    .panel {
+      font-size: 0.9rem;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0 16px;
+      box-shadow: var(--shadow);
+    }
+    .panel summary {
+      cursor: pointer;
+      padding: 14px 0;
+      font-weight: 600;
+      color: var(--fg);
+      font-size: 0.95rem;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .panel summary::-webkit-details-marker { display: none; }
+    .panel summary::before {
+      content: "▸";
+      font-size: 0.85rem;
+      transition: transform var(--transition);
+      color: var(--accent);
+    }
+    .panel[open] summary::before { transform: rotate(90deg); }
+    .panel summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    .cfg-body {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-bottom: 16px;
+    }
+    .cfg-units {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .cfg-unit {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+      background: var(--bg);
+    }
+    .cfg-unit h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--fg);
+    }
+
+    .chk {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+      color: var(--fg);
+      cursor: pointer;
+      min-height: 28px;
+    }
+    .chk input {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      accent-color: var(--accent);
+      flex: none;
+      cursor: pointer;
+    }
+
+    /* Units */
+    .units {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .unit {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+      box-shadow: var(--shadow);
+      transition: border-color var(--transition);
+    }
+    .unit h2 {
+      font-family: var(--font-display);
+      font-size: 1.12rem;
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .unit h2 .score {
+      font-variant-numeric: tabular-nums;
+      color: var(--accent);
+      font-size: 1.3rem;
+      transition: color 0.3s ease;
+    }
+
+    .group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .group-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .field > label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--fg);
+    }
+    .field input[type="text"] {
+      font: inherit;
+      font-variant-numeric: tabular-nums;
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--fg);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      font-size: 16px;
+    }
+    .field input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+    }
+    .field input[type="text"].invalid {
+      border-color: var(--bad);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--bad) 20%, transparent);
+    }
+    .field input[type="text"]:disabled {
+      opacity: 0.55;
+      border-style: dashed;
+      cursor: not-allowed;
+    }
+
+    .field > label.miss {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.84rem;
+      font-weight: 400;
+      color: var(--muted);
+      cursor: pointer;
+      line-height: 1.3;
+      min-height: 28px;
+      user-select: none;
+    }
+    .miss input {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      accent-color: var(--accent);
+      flex: none;
+      cursor: pointer;
+    }
+    .field.is-missing > label.miss {
+      color: var(--fg);
+      font-weight: 500;
+    }
+
+    .need {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      animation: fadeIn 0.25s ease;
+    }
+    .need.ok { background: var(--ok-soft); color: var(--ok); }
+    .need.bad { background: var(--bad-soft); color: var(--bad); }
+
+    .row2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .breakdown {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      border-top: 1px dashed var(--line);
+      padding-top: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+    .breakdown b { color: var(--fg); font-weight: 600; }
+
+    /* Result */
+    .result {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      position: sticky;
+      bottom: max(12px, env(safe-area-inset-bottom));
+      z-index: 10;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .result.pulse {
+      animation: pulseBorder 0.6s ease;
+    }
+    .big {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .big .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .big .value {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 9vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      transition: color 0.3s ease;
+    }
+    .big .formula {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .status {
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      background: var(--accent-soft);
+      color: var(--accent);
+      text-align: center;
+      transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+      min-width: 140px;
+    }
+    .status.ok { background: var(--ok-soft); color: var(--ok); }
+    .status.bad { background: var(--bad-soft); color: var(--bad); }
+    .status.warn { background: var(--warn-soft); color: var(--warn); }
+    .status.pop { animation: pop 0.35s ease; }
+
+    .hint {
+      width: 100%;
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .hint strong { color: var(--fg); }
+
+    /* AF */
+    .af {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: var(--shadow);
+    }
+    .af h2 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      margin: 0;
+    }
+    .af > p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      max-width: 64ch;
+    }
+    .af-field { max-width: 300px; }
+    .af-result {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px dashed var(--line);
+      padding-top: 16px;
+    }
+
+    /* Footer */
+    .foot {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    button {
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--fg);
+      cursor: pointer;
+      transition: border-color var(--transition), color var(--transition), background var(--transition), transform 0.15s ease;
+      min-height: 44px;
+    }
+    button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    button:active { transform: scale(0.97); }
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .rules ul {
+      margin: 0 0 14px;
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .rules strong { color: var(--fg); }
+
+    .credit {
+      margin: 8px 0 0;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .credit strong {
+      color: var(--fg);
+      font-weight: 600;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes pop {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+    @keyframes pulseBorder {
+      0%, 100% { box-shadow: var(--shadow); }
+      50% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent), var(--shadow); }
+    }
+
+    /* Mobile */
+    @media (max-width: 520px) {
+      body { padding-top: max(16px, env(safe-area-inset-top)); }
+      .wrap { gap: 14px; }
+      .logo { height: 44px; }
+      .seg { width: 100%; }
+      .seg span { padding: 12px 8px; font-size: 0.85rem; }
+      .units { grid-template-columns: 1fr; }
+      .result {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .status { width: 100%; text-align: center; }
+      .af-result { flex-direction: column; align-items: flex-start; }
+      .part-name { font-size: 1.1rem; }
+      header { padding-right: 48px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Logo Faculdade Zarns -->
+    <div class="logo-wrap">
+      <img 
+        class="logo" 
+        src="https://www.bahiajornal.com.br/images/noticias/88211/389d5f35e8d57db08d0d0ca1ea8177df.jpeg" 
+        alt="Faculdade Zarns" 
+        width="220" 
+        height="52"
+        loading="eager"
+      >
+    </div>
+
+    <header>
+      <h1>Vou passar?</h1>
+      <p>Descubra se você passa na matéria. Digite as notas que você já tirou (de 0 a 100) e veja a sua média.</p>
+      <p>Para passar, a média precisa ser <strong>70 ou mais</strong>. O professor ainda não deu uma nota? Marque <strong>Ainda não tenho</strong> nela e veja quanto você precisa tirar.</p>
+      <button type="button" class="theme-btn" id="theme-btn" aria-label="Alternar tema claro/escuro" title="Alternar tema">🌓</button>
+    </header>
+
+    <section class="card">
+      <fieldset class="sel">
+        <legend>Quantas partes tem a sua matéria?</legend>
+        <div class="seg" role="radiogroup" aria-label="Número de partes">
+          <label><input type="radio" name="nparts" id="np1" value="1" checked><span>Matéria única</span></label>
+          <label><input type="radio" name="nparts" id="np2" value="2"><span>2 partes</span></label>
+          <label><input type="radio" name="nparts" id="np3" value="3"><span>3 partes</span></label>
+        </div>
+        <span class="cfg-note">Exemplo: Práticas Médicas I tem Clínica Médica e Pediatria (2 partes). Cada parte tem as suas notas e vale o mesmo na média da matéria.</span>
+      </fieldset>
+    </section>
+
+    <div class="parts" id="parts"></div>
+
+    <section class="result" id="result-box" aria-live="polite">
+      <div class="big">
+        <span class="label">Média final</span>
+        <span class="value" id="final">–</span>
+        <span class="formula" id="formula">(1ª unidade + 2ª unidade) ÷ 2</span>
+      </div>
+      <div class="status" id="status">Preencha as notas</div>
+      <p class="hint" id="hint"></p>
+    </section>
+
+    <section class="af" aria-labelledby="af-title">
+      <h2 id="af-title">Prova final</h2>
+      <p>Ficou com média entre 40 e 69,99? Então você faz a prova final (AF). Sua nota final será: média × 0,6 + AF × 0,4. Para passar, ela precisa ser 60 ou mais. As notas não são arredondadas.</p>
+      <div class="field af-field">
+        <label for="ns">Minha média do semestre</label>
+        <input type="text" id="ns" inputmode="decimal" autocomplete="off" placeholder="Ex.: 64" aria-describedby="af-src">
+        <span class="cfg-note" id="af-src"></span>
+      </div>
+      <div class="af-result" aria-live="polite">
+        <div class="big">
+          <span class="label">Nota necessária na prova final</span>
+          <span class="value" id="af-value">–</span>
+          <span class="formula" id="af-formula"></span>
+        </div>
+        <div class="status" id="af-status">Informe a média</div>
+        <p class="hint" id="af-hint"></p>
+      </div>
+    </section>
+
+    <details class="panel rules">
+      <summary>Como o cálculo é feito</summary>
+      <ul id="rules-list"></ul>
+    </details>
+
+    <div class="foot">
+      <span>Suas notas e escolhas ficam salvas só neste aparelho.</span>
+      <button type="button" id="clear">Limpar notas</button>
+    </div>
+
+    <p class="credit">Desenvolvido por <strong>Antonio</strong> e <strong>Juan</strong> · Faculdade Zarns</p>
+  </div>
+
+  <script>
+  (function () {
+    var MEDIA = 70;
+    var WT = 0.6;
+    var PARTS_MAX = 3;
+    var DEFS = [
+      { id: "av1",   kind: "av",   unit: 1, label: "AV1 (prova teórica)", base: "AV1" },
+      { id: "amb1",  kind: "amb",  unit: 1, label: "Ambulatório",         base: "Ambulatório da 1ª unidade" },
+      { id: "lab1",  kind: "lab",  unit: 1, label: "Laboratório",         base: "Laboratório da 1ª unidade" },
+      { id: "av2",   kind: "av",   unit: 2, label: "AV2 (prova teórica)", base: "AV2" },
+      { id: "osce2", kind: "osce", unit: 2, label: "OSCE",                base: "OSCE" },
+      { id: "amb2",  kind: "amb",  unit: 2, label: "Ambulatório",         base: "Ambulatório da 2ª unidade" },
+      { id: "lab2",  kind: "lab",  unit: 2, label: "Laboratório",         base: "Laboratório da 2ª unidade" }
+    ];
+    var CFG_IDS = ["amb1", "lab1", "amb2", "lab2", "osce2"];
+    var EXEMPLOS = ["Clínica Médica", "Pediatria", "Cirurgia"];
+    var STORE = "calc-semestre-v6";
+    var $ = function (id) { return document.getElementById(id); };
+    var calcMedia = null;
+    var P = [];
+    var lastStatus = "";
+
+    function unitHTML(i, n) {
+      var osce = n === 2 ? '<div id="m' + i + '-osce2"></div>' : "";
+      return '<section class="unit" aria-labelledby="t' + i + n + '">' +
+        '<h2 id="t' + i + n + '"><span>' + n + 'ª Unidade</span><span class="score" id="us' + i + n + '">–</span></h2>' +
+        '<div class="group"><div class="group-title"><span>Teoria</span><span>vale 60%</span></div><div id="m' + i + '-av' + n + '"></div></div>' +
+        '<div class="group" id="pg' + i + n + '"><div class="group-title"><span>Prática</span><span>vale 40%</span></div>' + osce +
+        '<div class="row2"><div id="m' + i + '-amb' + n + '"></div><div id="m' + i + '-lab' + n + '"></div></div></div>' +
+        '<div class="breakdown"><span>Teoria <b id="ut' + i + n + '">–</b></span><span id="upw' + i + n + '">Prática <b id="up' + i + n + '">–</b></span></div>' +
+        '</section>';
+    }
+    function cfgHTML(i) {
+      function chk(id, label) {
+        return '<label class="chk"><input type="checkbox" id="c' + i + '-' + id + '" checked> ' + label + '</label>';
+      }
+      return '<details class="panel" open><summary>Quais notas compõem a nota de cada unidade?</summary><div class="cfg-body">' +
+        '<span class="cfg-note">Marque as notas que existem no seu semestre. A prova teórica (AV) sempre vale.</span>' +
+        '<div class="cfg-units">' +
+          '<div class="cfg-unit"><h3>1ª unidade</h3>' + chk("amb1", "Ambulatório") + chk("lab1", "Laboratório") + '</div>' +
+          '<div class="cfg-unit"><h3>2ª unidade</h3>' + chk("osce2", "OSCE") + chk("amb2", "Ambulatório") + chk("lab2", "Laboratório") + '</div>' +
+        '</div>' +
+        '<span class="cfg-note">Só tem laboratório? Desmarque o ambulatório.<br>Na 2ª unidade, a prática é só o OSCE? Desmarque ambulatório e laboratório.</span>' +
+        '</div></details>';
+    }
+    function headHTML(i) {
+      return '<div class="part-head" id="ph' + i + '" hidden>' +
+        '<input type="text" class="part-name" id="pn' + i + '" maxlength="40" placeholder="Nome da parte ' + (i + 1) + ' (ex.: ' + EXEMPLOS[i] + ')" aria-label="Nome da parte ' + (i + 1) + '">' +
+        '<span class="part-score" id="ps' + i + '">Média –</span></div>';
+    }
+    function makePart(i, root) {
+      var p = { i: i, root: root, head: $("ph" + i), nameEl: $("pn" + i), scoreEl: $("ps" + i), c: {}, f: {}, cfg: null, info: null, st: null, media: null };
+      CFG_IDS.forEach(function (id) { p.c[id] = $("c" + i + "-" + id); });
+      DEFS.forEach(function (d) {
+        var mount = $("m" + i + "-" + d.id);
+        var fid = "f" + i + "-" + d.id;
+        var box = document.createElement("div");
+        box.className = "field";
+        box.innerHTML =
+          '<label for="' + fid + '">' + d.label + '</label>' +
+          '<input type="text" id="' + fid + '" inputmode="decimal" autocomplete="off" placeholder="0 a 100">' +
+          '<label class="miss"><input type="checkbox" id="' + fid + '-m"> Ainda não tenho</label>' +
+          '<div class="need" id="' + fid + '-n" hidden></div>';
+        mount.appendChild(box);
+        p.f[d.id] = { def: d, mount: mount, box: box, input: $(fid), miss: $(fid + "-m"), need: $(fid + "-n") };
+      });
+      return p;
+    }
+    (function build() {
+      var host = $("parts");
+      for (var i = 0; i < PARTS_MAX; i++) {
+        var root = document.createElement("div");
+        root.className = "part" + (i > 0 ? " part-n" : "");
+        root.innerHTML = headHTML(i) + cfgHTML(i) + '<div class="units">' + unitHTML(i, 1) + unitHTML(i, 2) + '</div>';
+        host.appendChild(root);
+        P.push(makePart(i, root));
+      }
+    })();
+
+    function parse(v) {
+      var s = String(v == null ? "" : v).trim().replace(",", ".");
+      if (s === "") return null;
+      var n = Number(s);
+      return isFinite(n) ? n : NaN;
+    }
+    function fmt(n) {
+      if (n == null || !isFinite(n)) return "–";
+      var s = (Math.floor(n * 100 + 1e-6) / 100).toFixed(2);
+      if (s.charAt(s.length - 1) === "0") s = s.slice(0, -1);
+      return s.replace(".", ",");
+    }
+    function fmt2(n) {
+      return (Math.round(n * 100) / 100).toString().replace(".", ",");
+    }
+    function esc(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    function lista(arr) {
+      if (arr.length <= 1) return arr.join("");
+      return arr.slice(0, -1).join(", ") + " e " + arr[arr.length - 1];
+    }
+    function pname(p) {
+      var v = p.nameEl.value.trim();
+      return v || "Parte " + (p.i + 1);
+    }
+    function currentN() {
+      var r = document.querySelector('input[name="nparts"]:checked');
+      var n = r ? Number(r.value) : 1;
+      return n >= 1 && n <= PARTS_MAX ? n : 1;
+    }
+
+    function readCfg(p) {
+      p.cfg = {
+        u1: { amb: p.c.amb1.checked, lab: p.c.lab1.checked, osce: false },
+        u2: { amb: p.c.amb2.checked, lab: p.c.lab2.checked, osce: p.c.osce2.checked }
+      };
+    }
+    function enabled(p, d) {
+      return d.kind === "av" ? true : p.cfg["u" + d.unit][d.kind];
+    }
+    function unitInfo(p, n) {
+      var c = p.cfg["u" + n];
+      var na = (c.amb ? 1 : 0) + (c.lab ? 1 : 0);
+      var blocks = (c.osce ? 1 : 0) + (na > 0 ? 1 : 0);
+      var wt = blocks === 0 ? 1 : WT;
+      var wp = 1 - wt;
+      var coef = {};
+      coef["av" + n] = wt;
+      if (c.osce) coef["osce" + n] = wp / blocks;
+      if (c.amb) coef["amb" + n] = wp / blocks / na;
+      if (c.lab) coef["lab" + n] = wp / blocks / na;
+      return { coef: coef, wt: wt, wp: wp, blocks: blocks, na: na };
+    }
+    function describeUnit(p, n) {
+      var c = p.cfg["u" + n], u = unitInfo(p, n);
+      var av = "AV" + n;
+      if (u.blocks === 0) return av + " × 1 (esta unidade está sem prática)";
+      var items = [];
+      if (c.osce) items.push("OSCE");
+      if (u.na === 2) items.push("(Ambulatório + Laboratório) ÷ 2");
+      else if (c.amb) items.push("Ambulatório");
+      else if (c.lab) items.push("Laboratório");
+      var pr;
+      if (items.length > 1) pr = "(" + items.join(" + ") + ") ÷ 2";
+      else pr = items[0];
+      if (pr.indexOf(" ") !== -1) pr = "(" + pr + ")";
+      return av + " × 0,6 + " + pr + " × 0,4";
+    }
+    function addLi(ul, title, text) {
+      var li = document.createElement("li");
+      var s = document.createElement("strong");
+      s.textContent = title + " ";
+      li.appendChild(s);
+      li.appendChild(document.createTextNode(text));
+      ul.appendChild(li);
+    }
+    function renderRules(vis, nParts) {
+      var ul = $("rules-list");
+      ul.innerHTML = "";
+      vis.forEach(function (p) {
+        [1, 2].forEach(function (u) {
+          addLi(ul, (nParts > 1 ? pname(p) + " – " : "") + u + "ª unidade:", describeUnit(p, u));
+        });
+      });
+      if (nParts > 1) {
+        addLi(ul, "Média de cada parte:", "(1ª unidade + 2ª unidade) ÷ 2.");
+        addLi(ul, "Média final da matéria:", "média simples das partes (a soma das médias ÷ " + nParts + "). Cada parte vale o mesmo. Para passar, precisa ser " + MEDIA + " ou mais.");
+      } else {
+        addLi(ul, "Média final:", "(1ª unidade + 2ª unidade) ÷ 2. Para passar, precisa ser " + MEDIA + " ou mais.");
+      }
+      addLi(ul, "Notas que faltam:", "a calculadora descobre a menor nota que leva a sua média a " + MEDIA + ". Se faltar mais de uma nota, ela usa o mesmo valor para todas.");
+      addLi(ul, "Prova final (AF):", "vale para média entre 40 e 69,99. Nota final = média × 0,6 + AF × 0,4. Para passar, precisa ser 60 ou mais. Não há arredondamento.");
+    }
+
+    function setStatus(text, cls) {
+      var s = $("status");
+      s.textContent = text;
+      s.className = "status" + (cls ? " " + cls : "");
+      if (text !== lastStatus && (cls === "ok" || cls === "bad" || cls === "warn")) {
+        s.classList.add("pop");
+        $("result-box").classList.add("pulse");
+        setTimeout(function () {
+          s.classList.remove("pop");
+          $("result-box").classList.remove("pulse");
+        }, 600);
+      }
+      lastStatus = text;
+    }
+    function setNeed(r, text, cls) {
+      var n = r.need;
+      if (text == null) { n.hidden = true; n.textContent = ""; n.className = "need"; return; }
+      n.hidden = false;
+      n.textContent = text;
+      n.className = "need" + (cls ? " " + cls : "");
+    }
+
+    function renderMain() {
+      calcMedia = null;
+      var T = MEDIA;
+      var nParts = currentN();
+      var vis = P.slice(0, nParts);
+      P.forEach(function (p, i) {
+        p.root.hidden = i >= nParts;
+        p.head.hidden = nParts < 2;
+      });
+
+      var active = [];
+      var bad = false;
+      vis.forEach(function (p) {
+        readCfg(p);
+        p.info = { 1: unitInfo(p, 1), 2: unitInfo(p, 2) };
+        [1, 2].forEach(function (n) {
+          var blocks = p.info[n].blocks;
+          $("pg" + p.i + n).hidden = blocks === 0;
+          $("upw" + p.i + n).hidden = blocks === 0;
+        });
+        p.st = {};
+        DEFS.forEach(function (d) {
+          var r = p.f[d.id];
+          var on = enabled(p, d);
+          r.mount.hidden = !on;
+          var missing = on && r.miss.checked;
+          r.input.disabled = missing;
+          r.box.classList.toggle("is-missing", missing);
+          r.input.placeholder = missing ? "a calcular" : "0 a 100";
+          var v = null, invalid = false;
+          if (on && !missing) {
+            v = parse(r.input.value);
+            invalid = v !== null && (isNaN(v) || v < 0 || v > 100);
+            if (invalid) { bad = true; v = null; }
+          }
+          r.input.classList.toggle("invalid", invalid);
+          p.st[d.id] = { on: on, missing: missing, value: v };
+          setNeed(r, null);
+          if (on) active.push({ p: p, d: d });
+        });
+
+        var totals = {};
+        [1, 2].forEach(function (n) {
+          var u = p.info[n];
+          var keys = Object.keys(u.coef);
+          var all = keys.every(function (k) { return p.st[k].value !== null; });
+          if (all) {
+            var total = 0;
+            keys.forEach(function (k) { total += u.coef[k] * p.st[k].value; });
+            var teoria = u.coef["av" + n] * p.st["av" + n].value;
+            totals[n] = { total: total, teoria: teoria, pratica: total - teoria };
+          } else {
+            totals[n] = null;
+          }
+          var t = totals[n];
+          $("us" + p.i + n).textContent = t ? fmt(t.total) : "–";
+          $("ut" + p.i + n).textContent = t ? fmt(t.teoria) : "–";
+          $("up" + p.i + n).textContent = t ? fmt(t.pratica) : "–";
+        });
+        p.totals = totals;
+        p.media = totals[1] && totals[2] ? (totals[1].total + totals[2].total) / 2 : null;
+        p.scoreEl.textContent = "Média " + (p.media !== null ? fmt(p.media) : "–");
+      });
+
+      renderRules(vis, nParts);
+
+      var pending = active.filter(function (a) { return !a.p.st[a.d.id].missing && a.p.st[a.d.id].value === null; });
+      var missingF = active.filter(function (a) { return a.p.st[a.d.id].missing; });
+      var hint = $("hint");
+      hint.textContent = "";
+      $("final").textContent = "–";
+      $("formula").textContent = nParts > 1 ? "média simples das partes" : "(1ª unidade + 2ª unidade) ÷ 2";
+
+      if (bad) {
+        setStatus("Nota inválida", "warn");
+        hint.textContent = "Digite notas de 0 a 100.";
+        return;
+      }
+
+      if (pending.length > 0) {
+        setStatus("Preencha as notas");
+        hint.innerHTML = missingF.length
+          ? "Digite as notas que você já tem. Nas que o professor ainda não deu, marque <strong>Ainda não tenho</strong>."
+          : "Digite todas as notas para ver a sua média.";
+        return;
+      }
+
+      if (missingF.length === 0) {
+        var soma = 0;
+        vis.forEach(function (p) { soma += p.media; });
+        var media = soma / nParts;
+        calcMedia = media;
+        $("final").textContent = fmt(media);
+        if (nParts > 1) {
+          $("formula").textContent = "(" + vis.map(function (p) { return fmt(p.media); }).join(" + ") + ") ÷ " + nParts;
+        } else {
+          $("formula").textContent = "(" + fmt(vis[0].totals[1].total) + " + " + fmt(vis[0].totals[2].total) + ") ÷ 2";
+        }
+        var porParte = nParts > 1
+          ? " Média de cada parte: " + lista(vis.map(function (p) { return esc(pname(p)) + " " + fmt(p.media); })) + "."
+          : "";
+        if (media >= T - 1e-9) {
+          setStatus("Aprovado 🎉", "ok");
+          hint.innerHTML = "Sua média é " + T + " ou mais. Você passou direto!" + porParte;
+        } else if (media >= 40) {
+          setStatus("Realizará prova final", "warn");
+          hint.innerHTML = "Sua média ficou entre 40 e 69,99. Veja logo abaixo quanto você precisa tirar na prova final." + porParte;
+        } else {
+          setStatus("Reprovado", "bad");
+          hint.innerHTML = "Sua média ficou abaixo de 40. Nesse caso não há prova final." + porParte;
+        }
+        return;
+      }
+
+      var known = 0, cm = 0;
+      active.forEach(function (a) {
+        var coef = (0.5 / nParts) * a.p.info[a.d.unit].coef[a.d.id];
+        if (a.p.st[a.d.id].missing) cm += coef;
+        else known += coef * a.p.st[a.d.id].value;
+      });
+      var maxPossible = known + cm * 100;
+      var names = missingF.map(function (a) {
+        return esc(nParts > 1 ? a.d.base + " (" + pname(a.p) + ")" : a.d.base);
+      });
+      var plural = missingF.length > 1;
+
+      if (known >= T - 1e-9) {
+        setStatus("Já está aprovado 🎉", "ok");
+        $("formula").textContent = "tirando 0 nas notas que faltam";
+        hint.innerHTML = "Mesmo tirando 0 em " + lista(names) + ", a sua média já é <strong>" + fmt(known) + "</strong> ou mais.";
+        missingF.forEach(function (a) { setNeed(a.p.f[a.d.id], "Você passa mesmo sem ela", "ok"); });
+        return;
+      }
+
+      var x = (T - known) / cm;
+      if (x > 100 + 1e-9) {
+        setStatus("Não alcança " + T, "bad");
+        $("formula").textContent = "tirando 100 nas notas que faltam";
+        hint.innerHTML = "Mesmo tirando 100 em " + lista(names) + ", a sua média máxima é <strong>" + fmt(maxPossible) + "</strong>. Se ela ficar entre 40 e 69,99, você faz a prova final.";
+        missingF.forEach(function (a) { setNeed(a.p.f[a.d.id], "Nem 100 é suficiente", "bad"); });
+        return;
+      }
+
+      var need = Math.ceil(x * 100 - 1e-6) / 100;
+      setStatus("Precisa de " + fmt2(need));
+      $("formula").textContent = "tirando " + fmt2(need) + " nas notas que faltam";
+      hint.innerHTML = plural
+        ? "Para chegar a " + T + " de média, tire pelo menos <strong>" + fmt2(need) + "</strong> em cada uma destas notas: " + lista(names) + "."
+        : "Para chegar a " + T + " de média, tire pelo menos <strong>" + fmt2(need) + "</strong> em " + names[0] + ".";
+      missingF.forEach(function (a) { setNeed(a.p.f[a.d.id], "Precisa de " + fmt2(need), ""); });
+    }
+
+    function renderAF() {
+      var el = $("ns");
+      var raw = parse(el.value);
+      var invalid = raw !== null && (isNaN(raw) || raw < 0 || raw > 100);
+      el.classList.toggle("invalid", invalid);
+      var h = $("af-hint");
+      h.textContent = "";
+      $("af-value").textContent = "–";
+      $("af-formula").textContent = "";
+      function st(text, cls) {
+        var s = $("af-status");
+        s.textContent = text;
+        s.className = "status" + (cls ? " " + cls : "");
+      }
+      var ns;
+      if (invalid) {
+        $("af-src").textContent = "";
+        st("Média inválida", "warn");
+        h.textContent = "Digite uma média de 0 a 100.";
+        return;
+      }
+      if (raw !== null) {
+        ns = raw;
+        $("af-src").textContent = "Usando a média que você digitou.";
+      } else if (calcMedia !== null) {
+        ns = calcMedia;
+        $("af-src").textContent = "Usando a média calculada acima: " + fmt(calcMedia) + ". Para usar outra, digite aqui.";
+      } else {
+        $("af-src").textContent = "Digite a sua média aqui ou preencha as notas lá em cima.";
+        st("Informe a média");
+        return;
+      }
+
+      if (ns >= 70 - 1e-9) {
+        st("Aprovado 🎉", "ok");
+        h.innerHTML = "Sua média é <strong>" + fmt(ns) + "</strong>. Você passou e não precisa fazer a prova final.";
+        return;
+      }
+      if (ns < 40) {
+        st("Reprovado", "bad");
+        h.innerHTML = "Sua média é <strong>" + fmt(ns) + "</strong>, abaixo de 40. Nesse caso não há prova final.";
+        return;
+      }
+      var need = Math.ceil((150 - 1.5 * ns) * 100 - 1e-6) / 100;
+      $("af-value").textContent = fmt2(need);
+      $("af-formula").textContent = "(60 − " + fmt(ns) + " × 0,6) ÷ 0,4";
+      st("Realizará prova final", "warn");
+      h.innerHTML = "Você precisa tirar pelo menos <strong>" + fmt2(need) + "</strong> na prova final. Conferindo: " + fmt(ns) + " × 0,6 + " + fmt2(need) + " × 0,4 = 60.";
+    }
+
+    function render() {
+      renderMain();
+      renderAF();
+    }
+
+    function save() {
+      try {
+        var d = { n: currentN(), ns: $("ns").value, parts: [], theme: document.documentElement.getAttribute("data-theme") || "" };
+        P.forEach(function (p) {
+          var o = { name: p.nameEl.value, c: {}, f: {} };
+          CFG_IDS.forEach(function (id) { o.c[id] = p.c[id].checked; });
+          DEFS.forEach(function (def) { o.f[def.id] = { v: p.f[def.id].input.value, m: p.f[def.id].miss.checked }; });
+          d.parts.push(o);
+        });
+        localStorage.setItem(STORE, JSON.stringify(d));
+      } catch (e) {}
+    }
+    function load() {
+      try {
+        var raw = localStorage.getItem(STORE);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        if (typeof d.ns === "string") $("ns").value = d.ns;
+        if (d.n >= 1 && d.n <= PARTS_MAX) $("np" + d.n).checked = true;
+        if (d.theme === "dark" || d.theme === "light") {
+          document.documentElement.setAttribute("data-theme", d.theme);
+        }
+        if (Array.isArray(d.parts)) {
+          P.forEach(function (p, i) {
+            var o = d.parts[i];
+            if (!o) return;
+            if (typeof o.name === "string") p.nameEl.value = o.name;
+            if (o.c) CFG_IDS.forEach(function (id) { if (typeof o.c[id] === "boolean") p.c[id].checked = o.c[id]; });
+            if (o.f) DEFS.forEach(function (def) {
+              var x = o.f[def.id];
+              if (x && typeof x.v === "string") p.f[def.id].input.value = x.v;
+              if (x && x.m === true) p.f[def.id].miss.checked = true;
+            });
+          });
+        }
+      } catch (e) {}
+    }
+
+    $("theme-btn").addEventListener("click", function () {
+      var root = document.documentElement;
+      var current = root.getAttribute("data-theme");
+      var next = current === "dark" ? "light" : current === "light" ? "" : "dark";
+      if (next) root.setAttribute("data-theme", next);
+      else root.removeAttribute("data-theme");
+      save();
+    });
+
+    function onChange() { render(); save(); }
+    P.forEach(function (p) {
+      p.nameEl.addEventListener("input", onChange);
+      CFG_IDS.forEach(function (id) { p.c[id].addEventListener("change", onChange); });
+      DEFS.forEach(function (d) {
+        p.f[d.id].input.addEventListener("input", onChange);
+        p.f[d.id].miss.addEventListener("change", onChange);
+      });
+    });
+    [1, 2, 3].forEach(function (n) { $("np" + n).addEventListener("change", onChange); });
+    $("ns").addEventListener("input", function () { renderAF(); save(); });
+    $("clear").addEventListener("click", function () {
+      P.forEach(function (p) {
+        DEFS.forEach(function (d) {
+          p.f[d.id].input.value = "";
+          p.f[d.id].miss.checked = false;
+        });
+      });
+      $("ns").value = "";
+      render();
+      save();
+      P[0].f.av1.input.focus();
+    });
+
+    load();
+    render();
+  })();
+  </script>
+</body>
+</html>
